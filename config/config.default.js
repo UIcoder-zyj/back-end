@@ -41,12 +41,13 @@ module.exports = appInfo => {
   };
   config.cors = {
     origin: '*', // 匹配规则  域名+端口  *则为全匹配
+    allowHeaders: 'Origin, X-Requested-With, Content-Type, Accept,Authorization',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
 
   config.mongoose = {
     client: {
-      url: 'mongodb://127.0.0.1:27017',
+      url: 'mongodb://tjugv:tjugv234@127.0.0.1:20000',
       options: {
         dbName: 'ugvproject'
       },

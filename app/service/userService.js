@@ -9,8 +9,8 @@
 
 "use strict";
 const Service = require("egg").Service;
-const State = require("../../status/operatorState.js");
-const jwtUtil= require('../common/JwtUtil')
+const state = require("../status/operatorState.js");
+const jwtUtil= require('../common/jwt/JwtUtil')
 
 class UserService extends Service {
   /**
@@ -23,17 +23,16 @@ class UserService extends Service {
     const query_msg = { username: obj.username };
     const _tUser = await this.ctx.model.UserModel.findOne(query_msg);
     if (_tUser) {
-      console.log(_tUser);
       if (_tUser.password === obj.password) {
         let jwt =jwtUtil.getInstance(_tUser);
         let token=jwt.generateToken();
-        State.USER.LOGIN.LOGIN_SUCCESS.token=token;
-        return State.USER.LOGIN.LOGIN_SUCCESS;
+        state.USER.LOGIN.LOGIN_SUCCESS.token=token;
+        return state.USER.LOGIN.LOGIN_SUCCESS;
       } else {
-        return State.USER.LOGIN.PASSWORD_ERROR;
+        return state.USER.LOGIN.PASSWORD_ERROR;
       }
     } else {
-      return State.USER.LOGIN.USERNAME_NOT_FOUND;
+      return state.USER.LOGIN.USERNAME_NOT_FOUND;
     }
   }
   async register(obj) {
@@ -42,16 +41,16 @@ class UserService extends Service {
     });
     if (_tUser) {
       if (_tUser.username === obj.username) {
-        let error = State.USER.USERNAME_EXIST;
-        return State.USER.REGISTER.USERNAME_EXIST;
+        let error = state.USER.USERNAME_EXIST;
+        return state.USER.REGISTER.USERNAME_EXIST;
       }
     } else {
-      const _User = new this.ctx.model.UserModel({
+      const _muser = new this.ctx.model.UserModel({
         username: obj.username,
         password: obj.password,
       });
-      _User.save();
-      return State.USER.REGISTER.REGISTER_SUCCESS;
+      _muser.save();
+      return state.USER.REGISTER.REGISTER_SUCCESS;
     }
   }
 }

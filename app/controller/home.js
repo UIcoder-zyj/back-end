@@ -9,7 +9,6 @@ class HomeController extends Controller {
   };
   async login() {
     const { ctx } = this;
-    console.log(ctx.data);
     ctx.logger.info('some request data: %j', ctx.request.body);
   //  this.logger.debug('this data is :');
     ctx.body = 'hi, egg';
