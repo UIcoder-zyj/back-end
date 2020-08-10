@@ -26,8 +26,14 @@ class UserService extends Service {
       if (_tUser.password === obj.password) {
         let jwt =jwtUtil.getInstance(_tUser);
         let token=jwt.generateToken();
-        state.USER.LOGIN.LOGIN_SUCCESS.token=token;
-        return state.USER.LOGIN.LOGIN_SUCCESS;
+        console.log('generate token is:',token);
+        const result=state.USER.LOGIN.LOGIN_SUCCESS;
+        result.user_info={
+          username: _tUser.username,
+          token: token
+        }
+        //state.USER.LOGIN.LOGIN_SUCCESS.token=token;
+        return result;
       } else {
         return state.USER.LOGIN.PASSWORD_ERROR;
       }

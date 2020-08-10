@@ -15,8 +15,11 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.post('/api/login', controller.userController.login);
-  router.post('/api/register',controller.userController.register);
+  router.post('/api/user/login', controller.userController.login);
+  router.post('/api/user/register',controller.userController.register);
+
+  router.post('/api/map/start_slam',controller.mapController.startSlam);
+  router.post('/api/map/end_slam',controller.mapController.endSlam)
 
   //router.post('/api/map/build',controller.mapController.build)
 };

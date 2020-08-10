@@ -31,7 +31,7 @@ class UgvService extends Service {
     }
     if(result.default &&result.user){
       const success_result=state.UGV.LOAD_ALL.LOAD_SUCCESS;
-      success_result.ugv_user=_tUgv.filter(item=>item.type==='user');
+      success_result.ugv_info=_tUgv.filter(item=>item.type==='user')[0];
       return success_result;
     }else if(result.default){
       return state.UGV.LOAD_ALL.LOAD_USER_FAILE;

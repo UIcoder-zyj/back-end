@@ -26,6 +26,7 @@ class UserController extends Controller {
       ugv_state=await this.ctx.service.ugvService.loadAll();
       if(ugv_state&&ugv_state.code===200){
         let map=this.app.locals['ugv_user'].default_map;
+        console.log('map is: ',map);
         if(map && Object.keys(map).length !== 0){
           map_state=await this.ctx.service.mapService.loadMap(map,false);
         }

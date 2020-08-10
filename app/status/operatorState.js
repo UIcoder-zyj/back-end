@@ -98,7 +98,7 @@ module.exports={
         code: 300
       },
       NOT_FOUND:{
-        msg: 'load map error : there has been one map  ',
+        msg: 'load map error : no map found',
         code: 301
       },
       MAP_OWNED:{

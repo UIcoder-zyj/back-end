@@ -61,5 +61,4 @@ class JwtUtil {
         return res;
     }
 }
-const jwtutil=JwtUtil.getInstance();
 module.exports = JwtUtil;
