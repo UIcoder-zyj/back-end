@@ -4,7 +4,7 @@
  * @Author: zyj
  * @Date: 2020-07-29 23:16:39
  * @LastEditors: zyj
- * @LastEditTime: 2020-07-30 10:54:39
+ * @LastEditTime: 2020-08-13 00:45:37
  * @Description: egg service description
  */
 'use strict';
@@ -19,6 +19,7 @@ module.exports = app => {
   router.post('/api/user/register',controller.userController.register);
 
   router.post('/api/map/start_slam',controller.mapController.startSlam);
+  router.post('/api/map/add_map',controller.mapController.addMap);
   router.post('/api/map/end_slam',controller.mapController.endSlam)
 
   //router.post('/api/map/build',controller.mapController.build)

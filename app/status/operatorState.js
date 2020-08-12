@@ -4,7 +4,7 @@
  * @Author: zyj
  * @Date: 2020-07-30 01:44:12
  * @LastEditors: zyj
- * @LastEditTime: 2020-07-30 10:58:41
+ * @LastEditTime: 2020-08-13 00:39:34
  */
 
 module.exports={
@@ -110,6 +110,24 @@ module.exports={
         code: 303
       }
 
+    },
+    ADD: {
+      ADD_SUCCESS:{
+        msg: 'add map success : save map success',
+        code: 310
+      },
+      MAP_EXISTED:{
+        msg: 'add map error : this map has been existed ',
+        code: 311
+      },
+      COUNT_UPDATE_ERROR:{
+        msg: 'add map error : map id can\'t update ',
+        code: 312
+      },
+      INSERT_ERROR:{
+        msg: 'add map error : inserting map to db has error ',
+        code: 313
+      }
     }
   }
 

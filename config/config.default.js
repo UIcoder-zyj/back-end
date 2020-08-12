@@ -4,7 +4,7 @@
  * @Author: zyj
  * @Date: 2020-07-29 23:16:39
  * @LastEditors: zyj
- * @LastEditTime: 2020-07-30 13:02:12
+ * @LastEditTime: 2020-08-13 01:21:45
  * @Description: egg service description
  */
 /* eslint valid-jsdoc: "off" */
@@ -48,6 +48,8 @@ module.exports = appInfo => {
   config.mongoose = {
     client: {
       url: 'mongodb://tjugv:tjugv234@127.0.0.1:20000',
+      //  url: 'mongodb://127.0.0.1: 27017',
+
       options: {
         dbName: 'ugvproject'
       },

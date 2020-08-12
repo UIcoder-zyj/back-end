@@ -4,7 +4,7 @@
  * @Author: zyj
  * @Date: 2020-07-30 00:34:15
  * @LastEditors: zyj
- * @LastEditTime: 2020-07-30 12:44:13
+ * @LastEditTime: 2020-08-13 00:57:17
  */
 
 "use strict";
@@ -19,30 +19,32 @@ class MapService extends Service {
    * @msg:  map load service
    * @param map{id} force_switch(switch map)
    * @return: load map state or null
-   */
-  async loadMap(map,force_switch = false) {
+  */
+  async loadMap(map, force_switch = false) {
     if (
       !force_switch &&
       this.app.locals["map_info"] &&
       Object.keys(this.app.locals["map_info"]) !== 0
     ) {
-      const result=state.MAP.LOAD.MAP_OWNED;
-      result.map_info=this.app.locals["map_info"];
+      const result = state.MAP.LOAD.MAP_OWNED;
+      result.map_info = this.app.locals["map_info"];
       return result;
     }
 
     if (
       this.app.locals["map_info"] &&
-      Object.keys(this.app.locals["map_info"]) !== 0&&
+      Object.keys(this.app.locals["map_info"]) !== 0 &&
       this.app.locals["map_info"].id === map_info.id
     ) {
-      const result=state.MAP.LOAD.MAP_LOADED;
-      result.map_info=this.app.locals["map_info"];
+      const result = state.MAP.LOAD.MAP_LOADED;
+      result.map_info = this.app.locals["map_info"];
       return result;
     }
     const _tMap = await this.ctx.model.MapModel.findOne(map);
     if (!_tMap) {
-      return state.MAP.LOAD.NOT_FOUND;
+      const result = state.MAP.LOAD.NOT_FOUND;
+      result.map_info = {};
+      return result;
     }
     let map_info = {
       id: parseInt(_tMap.id),
@@ -109,6 +111,49 @@ class MapService extends Service {
     result.map_info = map_info;
 
     return result;
+  }
+
+  async addMap(par) {
+    const _tMap = await this.ctx.model.MapModel.findOne({
+      name: par.name,
+      map_name: par.map_name,
+    });
+    if (_tMap) {
+      return state.MAP.ADD.MAP_EXISTED;
+    }
+    const _tCount = await this.ctx.model.CounterModel.findOneAndUpdate(
+      { _id: "mapid" },
+      { $inc: { sequence_value: 1 } },
+      { returnNewDocument: true }
+    );
+    if (_tCount) {
+      let id = _tCount.value.sequence_value + 1;
+      let map_info = {};
+      if (par.model == "inherit") {   //save map as a new map .
+        this.app.locals["mapInfo"].name = par.name;
+        this.app.locals["mapInfo"].id = parseInt(id);
+        map_info = this.app.locals["mapInfo"];
+      } else {      //add a new map record
+        map_info = {
+          id: parseInt(id),
+          name: par.name,
+          map_name: par.name,
+          resolution: 0.05,
+          trajectory: -1,
+          charges: [],
+          targets: [],
+          walls: [],
+        };
+      }
+      const _tMap_1=await this.ctx.model.MapModel.insertOne(map_info);
+      if(_tMap_1){
+        return state.MAP.ADD.ADD_SUCCESS;
+      }else{
+        return state.MAP.ADD.INSERT_ERROR;
+      }
+    }else{
+      return state.MAP.ADD.COUNT_UPDATE_ERROR;
+    }
   }
 }
 module.exports = MapService;

@@ -1,7 +1,7 @@
 #!/bin/zsh
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
-map_name=$SHELL_FOLDER/../assets/map/$1.yaml
-export ROS_IP=192.168.10.188
+map_name=$SHELL_FOLDER/../assets/map/$2.yaml
+export ROS_IP=$1
 export ROS_MASTER_URI=http://$ROS_IP:11311
 source /opt/ros/kinetic/setup.zsh
 source $HOME/ugv_ws/devel/setup.zsh
